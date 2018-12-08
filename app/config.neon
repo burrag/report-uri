@@ -1,0 +1,28 @@
+extensions:
+    psr11: Contributte\Psr11\DI\Psr11ContainerExtension
+
+di:
+    debugger: false
+
+services:
+    application:
+        class: App\Application
+
+    routerCollectionFactory:
+        class: App\Router\RouterCollectionFactory
+
+    router:
+        class: Symfony\Component\Routing\Router
+        arguments: [@serviceRouterLoader, routerCollectionFactory::create]
+
+    serviceRouterLoader:
+        class: Symfony\Component\Routing\Loader\DependencyInjection\ServiceRouterLoader
+
+    testHandler:
+        class: App\Handler\TestHandler
+
+    reportHandler:
+        class: App\Handler\ReportHandler
+
+    csvStorage:
+        class: App\Storage\CsvStorage

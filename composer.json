@@ -1,0 +1,33 @@
+{
+    "name": "burrag/csp-report",
+    "description": "Project for csp report",
+    "authors": [
+        {
+            "name": "Marek Humpolík",
+            "email": "marek.humpolik@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "mindplay/middleman": "^3.0",
+        "zendframework/zend-diactoros": "^2.0",
+        "zendframework/zend-httphandlerrunner": "^1.0",
+        "delolmo/symfony-router": "^1.0",
+        "middlewares/request-handler": "^1.4",
+        "symfony/config": "^4.1",
+        "nette/di": "^2.4",
+        "contributte/psr11-container-interface": "^0.1.0",
+        "nette/bootstrap": "^2.4",
+        "tracy/tracy": "^2.5",
+        "nette/utils": "^2.5",
+        "inspirecz/coding-standard": "^1.0"
+    },
+    "scripts": {
+        "cs": "phpcs --standard=vendor/inspirecz/coding-standard/ruleset.strict.xml --extensions=php --tab-width=4 -sp app",
+        "cs-fix": "phpcbf --standard=vendor/inspirecz/coding-standard/ruleset.strict.xml --extensions=php --tab-width=4 -sp app"
+    }
+}
