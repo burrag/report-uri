@@ -2,9 +2,11 @@
 
 namespace App\Handler;
 
+use App\Exception\InvalidCSPReportString;
 use App\Object\CSP;
 use App\Storage\IStorage;
 use Psr\Http\Message\ServerRequestInterface;
+use Tracy\Debugger;
 use Zend\Diactoros\Response\EmptyResponse;
 
 /**
@@ -24,9 +26,16 @@ class ReportHandler
 
     public function post(ServerRequestInterface $request)
     {
-        $csp = CSP::createFromCSPReportString($request->getBody()->getContents());
-        $this->storage->save($csp);
+        $response = new EmptyResponse();
 
-        return new EmptyResponse();
+        try {
+            $csp = CSP::createFromCSPReportString($request->getBody()->getContents());
+            $this->storage->save($csp);
+        } catch (InvalidCSPReportString $e) {
+            Debugger::log($e);
+            $response->withStatus(500);
+        }
+
+        return $response;
     }
 }

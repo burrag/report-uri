@@ -2,8 +2,9 @@
 
 namespace App\Object;
 
+use App\Exception\InvalidCSPReportString;
 use Nette\Utils\Json;
-
+use Nette\Utils\JsonException;
 
 class CSP
 {
@@ -22,7 +23,7 @@ class CSP
     /** @var string */
     private $sourceFile;
 
-    /** @var string */
+    /** @var string|null */
     private $violatedDirectives;
 
     /** @var string */
@@ -31,7 +32,7 @@ class CSP
     /** @var \DateTimeImmutable */
     private $reportDatetime;
 
-    private function __construct(string $blockedUri, string $documentUri, string $effectiveDirective, string $originalPolicy, string $sourceFile, string $violatedDirectives, string $referer)
+    private function __construct(string $blockedUri, string $documentUri, string $effectiveDirective, string $originalPolicy, string $sourceFile, ?string $violatedDirectives, string $referer)
     {
         $this->blockedUri = $blockedUri;
         $this->documentUri = $documentUri;
@@ -96,7 +97,7 @@ class CSP
     /**
      * @return string
      */
-    public function getViolatedDirectives(): string
+    public function getViolatedDirectives(): ?string
     {
         return $this->violatedDirectives;
     }
@@ -111,7 +112,12 @@ class CSP
 
     public static function createFromCSPReportString(string $report): CSP
     {
-        $cspArray = Json::decode($report, Json::FORCE_ARRAY);
+        try {
+            $cspArray = Json::decode($report, Json::FORCE_ARRAY);
+        } catch (JsonException $e) {
+            throw new InvalidCSPReportString('CSP report string is not valid', 0, $e);
+        }
+
         $report = $cspArray['csp-report'];
 
         return new self(

@@ -10,7 +10,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": ["app/Exception/exceptions.php"]
     },
     "require": {
         "mindplay/middleman": "^3.0",
