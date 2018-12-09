@@ -33,7 +33,7 @@ class ReportHandler
             $this->storage->save($csp);
         } catch (InvalidCSPReportString $e) {
             Debugger::log($e);
-            $response->withStatus(500);
+            $response = $response->withStatus(500);
         }
 
         return $response;
