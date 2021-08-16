@@ -2,4 +2,5 @@ temp/*
 vendor/*
 log/*
 .idea/*
+.idea/*
 report/*
