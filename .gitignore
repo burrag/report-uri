@@ -1,6 +1,5 @@
 temp/*
 vendor/*
 log/*
-composer.lock
 .idea/*
 report/*
